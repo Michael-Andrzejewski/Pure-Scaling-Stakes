@@ -1,0 +1,15 @@
+{
+  "id": "ScalingStakes",
+  "name": "Scaling Stakes",
+  "display_name": "Scaling Stakes",
+  "author": ["Custom"],
+  "description": "Adds 4 new stakes that play like White Stake but with faster blind scaling. No debuffs - just higher score requirements. Compatible with Cryptid.",
+  "prefix": "scalingstakes",
+  "main_file": "ScalingStakes.lua",
+  "badge_colour": "4488FF",
+  "badge_text_colour": "FFFFFF",
+  "version": "1.0.0",
+  "dependencies": [
+    "Steamodded (>=1.0.0~BETA)"
+  ]
+}

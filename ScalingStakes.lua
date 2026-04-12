@@ -1,3 +1,17 @@
+-- Fix: On the Continue screen, G.viewed_stake gets clamped to 1 before
+-- the UI callback renders the stake name. We hook viewed_stake_option to
+-- restore the correct stake from the save data when in Continue mode.
+local ss_orig_viewed = G.UIDEF.viewed_stake_option
+G.UIDEF.viewed_stake_option = function()
+    if G.SETTINGS.current_setup == 'Continue' and G.SAVED_GAME and G.SAVED_GAME.GAME then
+        local saved_stake = G.SAVED_GAME.GAME.stake
+        if saved_stake and saved_stake > 0 and saved_stake <= #G.P_CENTER_POOLS.Stake then
+            G.viewed_stake = saved_stake
+        end
+    end
+    return ss_orig_viewed()
+end
+
 ----------------------------------------------
 -- Atlas definitions for chips and stickers --
 ----------------------------------------------

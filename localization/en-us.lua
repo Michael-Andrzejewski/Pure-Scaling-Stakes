@@ -33,6 +33,15 @@ return {
                     "{C:attention}Level 5{} speed",
                 },
             },
+            stake_scalingstakes_soft_white = {
+                name = "Soft-White Stake",
+                text = {
+                    "Plays like {C:attention}White Stake{},",
+                    "but the first 3 antes all use",
+                    "{C:attention}Ante 1{} chip requirements.",
+                    "Scaling is shifted back {C:attention}2{} antes",
+                },
+            },
         },
     },
 }

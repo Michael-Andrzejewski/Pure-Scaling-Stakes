@@ -1,15 +1,16 @@
 # Pure Scaling Stakes
 
-A Balatro mod that adds 4 new stakes with only blind scaling increases and no debuffs. All stakes play like White Stake — no eternal, rental, or perishable jokers — just higher score requirements.
+A Balatro mod that adds 5 new stakes that only change blind scaling and never add debuffs. All stakes play like White Stake — no eternal, rental, or perishable jokers — just different score requirement curves.
 
 ## Stakes
 
-| Stake | Scaling Level | Equivalent To |
-|-------|--------------|---------------|
-| White-Blue | 2 | Red Stake's blind scaling |
-| White-Red | 3 | Green Stake's blind scaling |
-| White-Black | 4 | Cryptid Pink Stake's blind scaling |
-| White-Void | 5 | Cryptid Verdant Stake's blind scaling |
+| Stake | Scaling | Notes |
+|-------|---------|-------|
+| Soft-White | Level 1 (eased) | Antes 1–3 all use Ante 1 chips; scaling shifted back 2 antes |
+| White-Blue | Level 2 | Red Stake's blind scaling, no debuffs |
+| White-Red | Level 3 | Green Stake's blind scaling, no debuffs |
+| White-Black | Level 4 | Cryptid Pink Stake's blind scaling, no debuffs |
+| White-Void | Level 5 | Cryptid Verdant Stake's blind scaling, no debuffs |
 
 ## Requirements
 

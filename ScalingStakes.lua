@@ -103,3 +103,36 @@ SMODS.Stake({
         G.GAME.modifiers.scaling = 5
     end,
 })
+
+-- Soft-White Stake: White scaling, but antes 1-3 all use ante 1 chips,
+-- then shifted by 2 (ante 4 = ante 2 chips, ante 5 = ante 3, etc.)
+SMODS.Stake({
+    name = "Soft-White Stake",
+    key = "soft_white",
+    atlas = "ss_chips",
+    pos = { x = 4, y = 0 },
+    sticker_atlas = "ss_stickers",
+    sticker_pos = { x = 4, y = 0 },
+    applied_stakes = {},
+    colour = HEX("F5EFD0"),
+    above_stake = "white",
+    unlocked = true,
+    modifiers = function()
+        G.GAME.modifiers.scaling = 1
+        G.GAME.modifiers.ss_soft_white_shift = 2
+    end,
+})
+
+-- Hook get_blind_amount so the Soft-White ante shift takes effect.
+-- Antes 1..(shift+1) all return ante 1's chip value; higher antes use ante N-shift.
+local ss_orig_get_blind_amount = get_blind_amount
+function get_blind_amount(ante)
+    local shift = G.GAME and G.GAME.modifiers and G.GAME.modifiers.ss_soft_white_shift
+    if shift and shift > 0 then
+        if ante < 1 then return 100 end
+        local effective = ante - shift
+        if effective < 1 then effective = 1 end
+        return ss_orig_get_blind_amount(effective)
+    end
+    return ss_orig_get_blind_amount(ante)
+end

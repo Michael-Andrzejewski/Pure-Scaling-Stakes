@@ -2,7 +2,7 @@
   "id": "ScalingStakes",
   "name": "Scaling Stakes",
   "display_name": "Scaling Stakes",
-  "author": ["Custom"],
+  "author": ["Soareverix"],
   "description": "Adds 4 new stakes that play like White Stake but with faster blind scaling. No debuffs - just higher score requirements. Compatible with Cryptid.",
   "prefix": "scalingstakes",
   "main_file": "ScalingStakes.lua",

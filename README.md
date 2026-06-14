@@ -1,5 +1,7 @@
 # Pure Scaling Stakes
 
+By **Soareverix**.
+
 A Balatro mod that adds 5 new stakes that only change blind scaling and never add debuffs. All stakes play like White Stake — no eternal, rental, or perishable jokers — just different score requirement curves.
 
 ## Stakes

@@ -2,7 +2,7 @@
 
 By **Soareverix**.
 
-A Balatro mod that adds 5 new stakes that only change blind scaling and never add debuffs. All stakes play like White Stake — no eternal, rental, or perishable jokers — just different score requirement curves.
+A Balatro mod that adds 6 new stakes that only change blind scaling and never add debuffs. All stakes play like White Stake — no eternal, rental, or perishable jokers — just different score requirement curves.
 
 ## Stakes
 
@@ -13,6 +13,7 @@ A Balatro mod that adds 5 new stakes that only change blind scaling and never ad
 | White-Red | Level 3 | Green Stake's blind scaling, no debuffs |
 | White-Black | Level 4 | Cryptid Pink Stake's blind scaling, no debuffs |
 | White-Void | Level 5 | Cryptid Verdant Stake's blind scaling, no debuffs |
+| Exponent | Gold, then x2 / squared / ^5 | Gold Stake chips for Antes 1-3; Antes 4-7 double the last Ante, 8-15 square it, 16+ raise it to the 5th power. Needs Amulet or Talisman past Ante 13 |
 
 ## Requirements
 

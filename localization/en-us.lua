@@ -33,6 +33,16 @@ return {
                     "{C:attention}Level 5{} speed",
                 },
             },
+            stake_scalingstakes_exponent = {
+                name = "Exponent Stake",
+                text = {
+                    "No debuffs. {C:attention}Gold Stake{} blinds",
+                    "for Antes 1-3, then each Ante:",
+                    "Antes 4-7: {C:attention}x2{} the last Ante",
+                    "Antes 8-15: last Ante {C:attention}squared{}",
+                    "Ante 16+: last Ante {C:attention}^5{}",
+                },
+            },
         },
     },
 }

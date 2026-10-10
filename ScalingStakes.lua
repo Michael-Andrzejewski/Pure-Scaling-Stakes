@@ -25,6 +25,7 @@ local ss_config_defaults = {
     apply_to_white_red = false,
     apply_to_white_black = false,
     apply_to_white_void = false,
+    apply_to_exponent = false,
     win_ante = 8,
 }
 
@@ -161,6 +162,47 @@ SMODS.Stake({
     end,
 })
 
+-- Exponent Stake: Gold Stake's chips for antes 1-3, then each ante's chips
+-- come from the ante before: x2 for antes 4-7, squared for antes 8-15, and
+-- to the 5th power from ante 16 on. No debuffs. See ss_exponent_amount below.
+SMODS.Stake({
+    name = "Exponent Stake",
+    key = "exponent",
+    atlas = "ss_chips",
+    pos = { x = 5, y = 0 },
+    sticker_atlas = "ss_stickers",
+    sticker_pos = { x = 5, y = 0 },
+    applied_stakes = {},
+    colour = HEX("E8B83A"),
+    above_stake = "scalingstakes_white_void",
+    unlocked = true,
+    modifiers = function()
+        G.GAME.modifiers.scaling = 3
+        G.GAME.modifiers.ss_exponent = true
+        ss_apply_soft('apply_to_exponent')
+    end,
+})
+
+-- Base chips for the Exponent Stake. Values past ante 13 exceed normal Lua
+-- numbers, so this uses Amulet/Talisman big numbers (to_big) when present.
+local SS_EXP_GOLD = { 300, 1000, 3200 } -- Gold Stake (scaling level 3), antes 1-3
+local function ss_exponent_amount(ante)
+    if to_number then ante = to_number(ante) end
+    local big = to_big or function(x) return x end
+    if ante < 1 then return big(100) end
+    local amount = big(SS_EXP_GOLD[math.min(ante, 3)])
+    for a = 4, ante do
+        if a <= 7 then
+            amount = amount * 2
+        elseif a <= 15 then
+            amount = amount * amount
+        else
+            amount = amount ^ 5
+        end
+    end
+    return amount
+end
+
 ----------------------------------------------
 -- Soft-ante shift wiring                    --
 ----------------------------------------------
@@ -226,16 +268,18 @@ end
 local ss_orig_get_blind_amount = get_blind_amount
 function get_blind_amount(ante)
     local shift = G.GAME and G.GAME.modifiers and G.GAME.modifiers.ss_soft_white_shift
+    local exponent = G.GAME and G.GAME.modifiers and G.GAME.modifiers.ss_exponent
+    local base = exponent and ss_exponent_amount or ss_orig_get_blind_amount
     if shift and shift > 0 then
         if ante < 1 then return 100 end
         local effective = ante - shift
         if effective < 1 then effective = 1 end
-        local out = ss_orig_get_blind_amount(effective)
+        local out = base(effective)
         ss_log(string.format('get_blind_amount(%s) shift=%s -> effective=%s -> %s',
             tostring(ante), tostring(shift), tostring(effective), tostring(out)))
         return out
     end
-    return ss_orig_get_blind_amount(ante)
+    return base(ante)
 end
 
 ----------------------------------------------
@@ -279,6 +323,7 @@ if SMODS.current_mod then
                 row(create_toggle({ label = 'White-Red Stake', ref_table = cfg, ref_value = 'apply_to_white_red' })),
                 row(create_toggle({ label = 'White-Black Stake', ref_table = cfg, ref_value = 'apply_to_white_black' })),
                 row(create_toggle({ label = 'White-Void Stake', ref_table = cfg, ref_value = 'apply_to_white_void' })),
+                row(create_toggle({ label = 'Exponent Stake', ref_table = cfg, ref_value = 'apply_to_exponent' })),
                 row({ n = G.UIT.T, config = {
                     text = 'Win ante (default 8, applies to all runs):',
                     scale = 0.42,
@@ -314,13 +359,14 @@ if ss_mod_handle and ss_mod_handle.config_tab then
     local orig_tab = ss_mod_handle.config_tab
     ss_mod_handle.config_tab = function(...)
         local c = ss_mod_handle.config or {}
-        ss_log(string.format('config_tab open: soft_antes=%s white=%s wb=%s wr=%s wblk=%s wv=%s',
+        ss_log(string.format('config_tab open: soft_antes=%s white=%s wb=%s wr=%s wblk=%s wv=%s exp=%s',
             tostring(c.soft_antes),
             tostring(c.apply_to_white),
             tostring(c.apply_to_white_blue),
             tostring(c.apply_to_white_red),
             tostring(c.apply_to_white_black),
-            tostring(c.apply_to_white_void)))
+            tostring(c.apply_to_white_void),
+            tostring(c.apply_to_exponent)))
         return orig_tab(...)
     end
 end
